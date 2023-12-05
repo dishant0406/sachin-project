@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Information Form</title>
+    <link rel="stylesheet" href="<%= '/stylesheets/submit.css' %>">
+</head>
+<body>
+    <div class="formsub">
+        <form action="/submit" method="post">
+            <label for="collegeName">College Name:</label>
+            <input type="text" id="collegeName" name="collegeName" required><br>
+    
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br>
+    
+            <label for="district">District:</label>
+            <input type="text" id="district" name="district" required><br>
+    
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required><br>
+    
+            <label for="collegeType">College Type:</label>
+            <select id="collegeType" name="collegeType" required>
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select><br>
+    
+            <label for="courses">Courses (comma-separated):</label>
+            <input type="text" id="courses" name="courses" required><br>
+    
+            <label for="nirfRanking">NIRF Ranking:</label>
+            <input type="number" id="nirfRanking" name="nirfRanking"><br>
+    
+            <label for="fieldOfStudy">Field of Study:</label>
+            <input type="text" id="fieldOfStudy" name="fieldOfStudy" required><br>
+    
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

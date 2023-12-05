@@ -1,0 +1,79 @@
+<!-- views/allcollege.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Colleges</title>
+    <link rel="stylesheet" href="<%= '/stylesheets/allcol.css' %>">
+
+</head>
+<body>
+    <h1>All Colleges</h1>
+
+    <!-- Add a search bar -->
+    <input type="text" id="searchInput" oninput="filterColleges()" placeholder="Search by college name">
+
+    <div class="allcol">
+        <ul id="collegeList">
+            <!-- Display colleges here -->
+            <% colleges.forEach(college => { %>
+                <li>
+                    <strong><%= college.collegeName %></strong><br>
+                    Location: <%= college.location.city %>, <%= college.location.district %>, <%= college.location.state %><br>
+                    Type: <%= college.collegeType %><br>
+                    Courses: <%= college.courses.join(', ') %><br>
+                    NIRF Ranking: <%= college.nirfRanking %><br>
+                    Field of Study: <%= college.fieldOfStudy %><br>
+    
+                    <!-- Add a delete button with a unique identifier (college ID) -->
+                    <button onclick="deleteCollege('<%= college._id %>')">Delete</button>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+    <script>
+          function deleteCollege(collegeId) {
+            // Confirm deletion
+            const confirmDelete = confirm('Are you sure you want to delete this college?');
+
+            if (confirmDelete) {
+                // Make an AJAX request to the server to delete the college
+                fetch(`/delete-college/${collegeId}`, {
+                    method: 'DELETE',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Reload the page or update the UI as needed
+                        location.reload();
+                    } else {
+                        alert('Failed to delete college. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
+            }
+        }
+
+        function filterColleges() {
+            const input = document.getElementById('searchInput');
+            const filter = input.value.toUpperCase();
+            const list = document.getElementById('collegeList');
+            const items = list.getElementsByTagName('li');
+
+            // Iterate through all list items and hide those that don't match the search query
+            for (let i = 0; i < items.length; i++) {
+                const collegeName = items[i].getElementsByTagName('strong')[0].innerText.toUpperCase();
+                if (collegeName.includes(filter)) {
+                    items[i].style.display = '';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
