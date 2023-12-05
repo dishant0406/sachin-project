@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+const tls = require('tls');
+tls.DEFAULT_MIN_VERSION = 'TLSv1.2';
 require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URL);
